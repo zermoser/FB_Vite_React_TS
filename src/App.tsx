@@ -5,9 +5,12 @@ import Login from './pages/Login';
 const App: React.FC = () => {
   const navigate = useNavigate();
 
-  const handleLogin = (email: string, password: string) => {
-    console.log('Logged in with:', { email, password });
-    navigate('/home');
+  const handleLogin = async (username: string, password: string): Promise<void> => {
+    return new Promise((resolve) => {
+      console.log('Logged in with:', { username, password });
+      navigate('/home');
+      resolve();
+    });
   };
 
   return (

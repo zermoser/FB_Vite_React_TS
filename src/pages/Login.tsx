@@ -1,49 +1,95 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import axios from 'axios'; // Import Axios
 import { UserContext } from '../context/UserContext';
 
 interface LoginProps {
-  onLogin: (email: string, password: string) => void;
+  onLogin: (username: string, password: string) => Promise<void>;
 }
 
-const Login: React.FC<LoginProps> = ({ onLogin }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const Login: React.FC<LoginProps> = () => {
+  const [username, setUsername] = useState('emilys');
+  const [password, setPassword] = useState('emilyspass');
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const { dispatch } = useContext(UserContext);
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    onLogin(email, password);
-    dispatch({ type: 'SET_EMAIL', payload: email });
-    navigate('/home');
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await axios.post('https://dummyjson.com/auth/login', {
+        username,
+        password,
+      });
+      console.log('response', response)
+      dispatch({ type: 'SET_USER', payload: username });
+      navigate('/home');
+    } catch (err) {
+      setError('Invalid username or password. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <form className="bg-white p-6 rounded shadow-md" onSubmit={handleLogin}>
-        <h2 className="text-2xl mb-4">Facebook Clone</h2>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="mb-3 p-2 border border-gray-300 rounded w-full"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="mb-3 p-2 border border-gray-300 rounded w-full"
-        />
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
-        >
-          Log In
-        </button>
-      </form>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="max-w-screen-lg mx-auto flex flex-col lg:flex-row">
+        <div className="hidden lg:block w-1/2 lg:w-1/3">
+          <img
+            src="https://static.thairath.co.th/media/dFQROr7oWzulq5Fa5nRRVgnzYSSwUoPM7rigVHaj4QhdURLfyt90hBPNzf89n8vZ5bp.jpg"
+            className="object-cover w-full h-full"
+            alt="Login Image"
+          />
+        </div>
+        
+        <div className="w-full lg:w-2/3 px-4 lg:px-8 py-8 lg:py-0">
+          <form className="bg-white p-6 rounded-lg shadow-md" onSubmit={handleLogin}>
+            <h2 className="text-2xl font-bold text-center text-blue-500 mb-6">My Social Media</h2>
+            {error && <div className="text-red-500 mb-4">{error}</div>}
+            <input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="mb-4 p-3 w-full border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+            <div className="relative mb-4">
+              <input
+                type={passwordVisible ? 'text' : 'password'}
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="p-3 w-full border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              />
+              <button
+                type="button"
+                className="absolute top-1/2 transform -translate-y-1/2 right-4 focus:outline-none"
+                onClick={togglePasswordVisibility}
+              >
+                {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+              disabled={loading}
+            >
+              {loading ? 'Logging in...' : 'Log In'}
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

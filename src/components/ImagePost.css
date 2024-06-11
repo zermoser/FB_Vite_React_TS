@@ -1,0 +1,19 @@
+@keyframes shake {
+  0% { transform: scale(8) rotate(-10deg); }
+  50% { transform: scale(8) rotate(10deg); }
+  100% { transform: scale(8) rotate(-10deg); }
+}
+
+.image-container {
+  position: relative;
+}
+
+.heart-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  color: red;
+  z-index: 999;
+  animation: shake 0.5s infinite;
+}

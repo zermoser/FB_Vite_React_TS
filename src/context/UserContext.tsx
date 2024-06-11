@@ -2,24 +2,24 @@ import React, { createContext, useReducer, ReactNode } from 'react';
 
 // --------------------- กำหนดประเภทของสถานะ (State) และการกระทำ (Action) ---------------------
 interface State {
-  email: string;
+  username: string;
 }
 
 interface Action {
-  type: 'SET_EMAIL';
+  type: 'SET_USER';
   payload: string;
 }
 
 // --------------------- กำหนดสถานะเริ่มต้น (Initial State) --------------------------------------
 const initialState: State = {
-  email: '',
+  username: '',
 };
 
 // สร้าง Reducer Function
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case 'SET_EMAIL':
-      return { ...state, email: action.payload };
+    case 'SET_USER':
+      return { ...state, username: action.payload };
     default:
       return state;
   }

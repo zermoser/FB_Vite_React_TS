@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaHeart } from 'react-icons/fa';
+import './ImagePost.css';
 
 interface ImagePostProps {
   src: string;
@@ -13,15 +14,18 @@ const ImagePost: React.FC<ImagePostProps> = ({ src, alt, user }) => {
   const [comments, setComments] = useState<string[]>([]);
   const [comment, setComment] = useState('');
   const [isLikePending, setIsLikePending] = useState(false);
+  const [showHeart, setShowHeart] = useState(false);
 
   const handleLike = () => {
     if (isLikePending) return; // Prevent multiple like actions
     setIsLikePending(true); // Set like action in progress
     setLikes(likes + (isLiked ? -1 : 1)); // Toggle like
     setIsLiked(!isLiked);
+    setShowHeart(true); // Show heart icon
     setTimeout(() => {
       setIsLiked(false); // Hide heart after 1 second
       setIsLikePending(false); // Allow like action again
+      setShowHeart(false); // Hide heart icon
     }, 1000);
   };
 
@@ -41,12 +45,17 @@ const ImagePost: React.FC<ImagePostProps> = ({ src, alt, user }) => {
         </div>
         <span className="ml-2 font-bold">{user}</span>
       </div>
-      <img
-        src={src}
-        alt={alt}
-        className="w-full h-auto rounded-lg cursor-pointer"
-        onClick={handleLike}
-      />
+      <div className="image-container relative">
+        <img
+          src={src}
+          alt={alt}
+          className="w-full h-auto rounded-lg cursor-pointer"
+          onClick={handleLike}
+        />
+        {showHeart && (
+          <FaHeart className="heart-icon" />
+        )}
+      </div>
       <div className="flex justify-between items-center mt-2">
         <button
           className="text-blue-500"
@@ -72,12 +81,6 @@ const ImagePost: React.FC<ImagePostProps> = ({ src, alt, user }) => {
           </li>
         ))}
       </ul>
-      {isLiked && (
-        <FaHeart
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-red-500"
-          style={{ fontSize: '100px', zIndex: 999 }}
-        />
-      )}
     </div>
   );
 };
