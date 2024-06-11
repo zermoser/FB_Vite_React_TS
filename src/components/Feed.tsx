@@ -1,16 +1,30 @@
 import React from 'react';
+import ImagePost from './ImagePost';
 
 const Feed: React.FC = () => {
+  const posts = [
+    {
+      src: 'https://imgix.ranker.com/list_img_v2/9099/309099/original/the-absolute-best-of-the-business-cat-meme',
+      alt: 'Image',
+      user: 'คนเท่'
+    },
+    {
+      src: 'https://img.freepik.com/free-vector/funny-serious-cat-animal-meme_23-2148974916.jpg?size=338&ext=jpg&ga=GA1.1.1141335507.1717977600&semt=ais_user',
+      alt: 'Image',
+      user: 'แมวเหมียว'
+    },
+    {
+      src: 'https://cdn.onemars.net/sites/dreamies_th_r81SA_r9CA/image/why-do-cats-bite_1694524993557.jpeg',
+      alt: 'Image',
+      user: 'Hello I am Good Guy'
+    }
+  ];
+
   return (
-    <div className="flex-1 p-4 h-screen overflow-y-auto">
-      <div className="bg-white p-4 rounded shadow mb-4">
-        <h3 className="text-lg font-bold">User Name</h3>
-        <p>This is a mockup post content.</p>
-      </div>
-      <div className="bg-white p-4 rounded shadow mb-4">
-        <h3 className="text-lg font-bold">User Name</h3>
-        <p>This is another mockup post content.</p>
-      </div>
+    <div className="flex-1 p-4 h-screen">
+      {posts.map((post, index) => (
+        <ImagePost key={index} src={post.src} alt={post.alt} user={post.user} />
+      ))}
     </div>
   );
 };

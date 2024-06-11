@@ -12,7 +12,6 @@ const Widgets: React.FC = () => {
         <h3 className="text-lg font-bold">Sponsored</h3>
         <p>Ad Content</p>
       </div>
-      {/* Add more widgets here */}
     </div>
   );
 };

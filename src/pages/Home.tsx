@@ -8,10 +8,10 @@ const Home: React.FC = () => {
   const { state } = useContext(UserContext);
 
   return (
-    <div className="flex flex-col md:flex-row h-screen">
+    <div className="flex flex-col md:flex-row h-screen bg-gray-100">
       <Sidebar />
       <div className="flex-1 p-4 h-screen overflow-y-auto">
-        <h2 className="text-2xl font-bold mb-4">Welcome, <b className='text-blue-900'>{state.email}</b></h2>
+      <h2 className="text-2xl font-bold mb-4">Welcome, <b className='text-blue-900'>{state.email}</b></h2>
         <Feed />
       </div>
       <Widgets />
