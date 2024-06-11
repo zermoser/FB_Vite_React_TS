@@ -7,10 +7,11 @@ import Home from './pages/Home';
 const Root: React.FC = () => {
   const navigate = useNavigate();
 
-  const handleLogin = (email: string, password: string) => {
-    console.log('Logged in with:', { email, password });
+  const handleLogin = async (username: string, password: string) => {
+    console.log('Logged in with:', { username, password });
     navigate('/home');
-  };
+    return Promise.resolve();
+  };  
 
   return (
     <Routes>
