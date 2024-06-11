@@ -2,7 +2,7 @@ import React from 'react';
 
 const Sidebar: React.FC = () => {
   return (
-    <div className="w-full md:w-1/4 bg-white p-4 shadow-md">
+    <div className="w-full hidden md:block md:w-1/4 bg-white p-4 shadow-md">
       <h3 className="text-xl font-bold mb-4">Sidebar</h3>
       <ul>
         <li className="mb-4">

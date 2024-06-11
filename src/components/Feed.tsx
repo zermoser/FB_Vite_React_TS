@@ -21,7 +21,7 @@ const Feed: React.FC = () => {
   ];
 
   return (
-    <div className="flex-1 p-4 h-screen">
+    <div className="p-4 w-full">
       {posts.map((post, index) => (
         <ImagePost key={index} src={post.src} alt={post.alt} user={post.user} />
       ))}
