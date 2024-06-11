@@ -1,19 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import App from './App';
-import LoginWrapper from './components/LoginWrapper';
-import Home from './pages/Home';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { UserProvider } from './context/UserContext';
+import Root from './Root';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <Router>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/login" element={<LoginWrapper />} />
-        <Route path="/home" element={<Home />} />
-      </Routes>
-    </Router>
+    <UserProvider>
+      <Router>
+        <Root />
+      </Router>
+    </UserProvider>
   </React.StrictMode>,
 );

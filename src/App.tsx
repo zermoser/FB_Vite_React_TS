@@ -6,7 +6,6 @@ const App: React.FC = () => {
   const navigate = useNavigate();
 
   const handleLogin = (email: string, password: string) => {
-    // Handle login logic here
     console.log('Logged in with:', { email, password });
     navigate('/home');
   };
