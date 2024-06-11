@@ -15,6 +15,7 @@ const ImagePost: React.FC<ImagePostProps> = ({ src, alt, user }) => {
   const [comment, setComment] = useState('');
   const [isLikePending, setIsLikePending] = useState(false);
   const [showHeart, setShowHeart] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLike = () => {
     if (isLikePending) return; // Prevent multiple like actions
@@ -29,11 +30,20 @@ const ImagePost: React.FC<ImagePostProps> = ({ src, alt, user }) => {
     }, 1000);
   };
 
-  const handleCommentSubmit = (e: React.FormEvent) => {
+  const handleCommentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (comment.trim() !== '') {
-      setComments([...comments, comment]);
-      setComment('');
+      setIsLoading(true);
+      try {
+        // Simulate API request to add comment
+        setComments([...comments, comment]);
+        setComment('');
+      } catch (error) {
+        console.error('Error adding comment:', error);
+        // Handle error
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -52,9 +62,7 @@ const ImagePost: React.FC<ImagePostProps> = ({ src, alt, user }) => {
           className="w-full h-auto rounded-lg cursor-pointer"
           onClick={handleLike}
         />
-        {showHeart && (
-          <FaHeart className="heart-icon" />
-        )}
+        {showHeart && <FaHeart className="heart-icon" />}
       </div>
       <div className="flex justify-between items-center mt-2">
         <button
@@ -65,19 +73,31 @@ const ImagePost: React.FC<ImagePostProps> = ({ src, alt, user }) => {
           <FaHeart color={isLiked ? 'red' : 'inherit'} /> Like {likes}
         </button>
       </div>
-      <form onSubmit={handleCommentSubmit} className="mt-2">
+      <form onSubmit={handleCommentSubmit} className="mt-2 flex items-center">
         <input
           type="text"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
-          className="w-full p-2 border rounded-lg"
+          className="w-full p-2 border rounded-lg mr-2"
           placeholder="Add a comment..."
+          disabled={isLoading} // Disable input while submitting comment
         />
+        <button type="submit" className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg" disabled={isLoading}>
+          {isLoading ? 'Submitting...' : 'Submit'}
+        </button>
       </form>
       <ul className="mt-2">
-        {comments.map((c, index) => (
-          <li key={index} className="text-sm text-gray-700">
-            {c}
+        {comments.map((comment, index) => (
+          <li key={index} className="flex items-start mt-4 mb-2">
+            <div className="bg-blue-500 rounded-full h-8 w-8 flex items-center justify-center text-white mr-2">
+              {comment[0].toUpperCase()}
+            </div>
+            <div className="flex flex-col">
+              <div className="bg-gray-100 rounded-lg p-2">
+                <p className="text-sm text-gray-700">{comment}</p>
+              </div>
+              <p className="text-xs text-gray-500"> วัน xx xxxxxx xxxx : เวลา xx.xx</p>
+            </div>
           </li>
         ))}
       </ul>
