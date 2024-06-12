@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from 'axios'; // Import Axios
 import Swal from 'sweetalert2';
-import Modal from 'react-modal';
+import Modal from 'react-modal'; // Import Modal from react-modal
 import { UserContext } from '../context/UserContext';
 
 interface LoginProps {
@@ -12,6 +12,9 @@ interface LoginProps {
 
 // Modal styles
 const customStyles = {
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+  },
   content: {
     top: '50%',
     left: '50%',
@@ -19,6 +22,11 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
+    padding: '20px',
+    borderRadius: '10px',
+    boxShadow: '0px 5px 15px rgba(0, 0, 0, 0.3)',
+    width: '80%',
+    maxWidth: '500px', 
   },
 };
 
@@ -32,6 +40,7 @@ const Login: React.FC<LoginProps> = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Automatically open the modal when the component mounts
     setModalIsOpen(true);
   }, []);
 
@@ -119,10 +128,12 @@ const Login: React.FC<LoginProps> = () => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         style={customStyles}
-        contentLabel="Example Credentials"
       >
-        <h2>This is Example Username and Password to Login</h2>
-        <button onClick={closeModal} className="mt-4 bg-blue-500 text-white py-2 px-4 rounded">Close</button>
+        <h2 className="text-lg font-bold text-center mb-4">Hello ! Welcome to My Social Media</h2>
+        <p className="text-center">This is Example Username and Password to Login</p>
+        <div className="text-center mt-4">
+          <button onClick={closeModal} className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Close</button>
+        </div>
       </Modal>
     </div>
   );
