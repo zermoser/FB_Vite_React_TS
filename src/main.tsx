@@ -1,16 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router } from 'react-router-dom';
+import {  RouterProvider } from 'react-router-dom';
 import { UserProvider } from './context/UserContext';
-import Root from './Root';
+import { router } from './Router';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <UserProvider>
-      <Router>
-        <Root />
-      </Router>
+    <RouterProvider router={router} />
     </UserProvider>
   </React.StrictMode>,
 );

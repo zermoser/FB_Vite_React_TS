@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaHeart } from 'react-icons/fa';
-import './ImagePost.css';
+import styles from './ImagePost.module.css'
 
 interface ImagePostProps {
   src: string;
@@ -62,7 +62,7 @@ const ImagePost: React.FC<ImagePostProps> = ({ src, alt, user }) => {
           className="w-full h-auto rounded-lg cursor-pointer"
           onClick={handleLike}
         />
-        {showHeart && <FaHeart className="heart-icon" />}
+        {showHeart && <FaHeart className={styles.heartIcon} />}
       </div>
       <div className="flex justify-between items-center mt-2">
         <button

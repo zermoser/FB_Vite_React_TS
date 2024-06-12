@@ -3,7 +3,7 @@ import { FaUserPlus, FaBullhorn } from 'react-icons/fa';
 
 const Widgets: React.FC = () => {
   return (
-    <div className="w-full hidden md:block md:w-1/4 bg-gray-100 p-4 h-screen overflow-y-auto">
+    <div className="w-full hidden md:block md:w-1/4 bg-gray-100 p-4 h-screen overflow-y-auto sticky top-0">
       <div className="bg-white p-4 rounded shadow mb-4">
         <h3 className="text-lg font-bold mb-3 flex items-center">
           <FaUserPlus className="mr-2 text-blue-500" /> Friend Suggestions
