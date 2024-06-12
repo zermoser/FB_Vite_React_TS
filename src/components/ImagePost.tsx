@@ -1,32 +1,33 @@
 import React, { useState } from 'react';
 import { FaHeart } from 'react-icons/fa';
-import styles from './ImagePost.module.css'
+import styles from './ImagePost.module.css';
 
 interface ImagePostProps {
   src: string;
   alt: string;
   user: string;
+  comments: { text: string; timestamp: string }[];
+  onAddComment: (text: string) => void;
 }
 
-const ImagePost: React.FC<ImagePostProps> = ({ src, alt, user }) => {
+const ImagePost: React.FC<ImagePostProps> = ({ src, alt, user, comments: defaultComments, onAddComment }) => {
   const [likes, setLikes] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
-  const [comments, setComments] = useState<string[]>([]);
   const [comment, setComment] = useState('');
   const [isLikePending, setIsLikePending] = useState(false);
   const [showHeart, setShowHeart] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [comments, setComments] = useState<{ text: string; timestamp: string }[]>(defaultComments);
 
   const handleLike = () => {
-    if (isLikePending) return; // Prevent multiple like actions
-    setIsLikePending(true); // Set like action in progress
-    setLikes(likes + (isLiked ? -1 : 1)); // Toggle like
+    if (isLikePending) return;
+    setIsLikePending(true);
+    setLikes(likes + (isLiked ? -1 : 1));
     setIsLiked(!isLiked);
-    setShowHeart(true); // Show heart icon
+    setShowHeart(true);
     setTimeout(() => {
-      setIsLiked(false); // Hide heart after 1 second
-      setIsLikePending(false); // Allow like action again
-      setShowHeart(false); // Hide heart icon
+      setIsLikePending(false);
+      setShowHeart(false);
     }, 1000);
   };
 
@@ -35,12 +36,20 @@ const ImagePost: React.FC<ImagePostProps> = ({ src, alt, user }) => {
     if (comment.trim() !== '') {
       setIsLoading(true);
       try {
-        // Simulate API request to add comment
-        setComments([...comments, comment]);
+        const timestamp = new Date().toLocaleString('en-GB', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric'
+        });
+        setComments([...comments, { text: comment, timestamp }]);
+        onAddComment(comment); // Notify parent component
         setComment('');
       } catch (error) {
         console.error('Error adding comment:', error);
-        // Handle error
       } finally {
         setIsLoading(false);
       }
@@ -68,7 +77,7 @@ const ImagePost: React.FC<ImagePostProps> = ({ src, alt, user }) => {
         <button
           className="text-blue-500"
           onClick={handleLike}
-          disabled={isLikePending} // Disable like button while like action is in progress
+          disabled={isLikePending}
         >
           <FaHeart color={isLiked ? 'red' : 'inherit'} /> Like {likes}
         </button>
@@ -80,7 +89,7 @@ const ImagePost: React.FC<ImagePostProps> = ({ src, alt, user }) => {
           onChange={(e) => setComment(e.target.value)}
           className="w-full p-2 border rounded-lg mr-2"
           placeholder="Add a comment..."
-          disabled={isLoading} // Disable input while submitting comment
+          disabled={isLoading}
         />
         <button type="submit" className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg" disabled={isLoading}>
           {isLoading ? 'Submitting...' : 'Submit'}
@@ -90,13 +99,13 @@ const ImagePost: React.FC<ImagePostProps> = ({ src, alt, user }) => {
         {comments.map((comment, index) => (
           <li key={index} className="flex items-start mt-4 mb-2">
             <div className="bg-blue-500 rounded-full h-8 w-8 flex items-center justify-center text-white mr-2">
-              {comment[0].toUpperCase()}
+              {comment.text[0].toUpperCase()}
             </div>
             <div className="flex flex-col">
               <div className="bg-gray-100 rounded-lg p-2">
-                <p className="text-sm text-gray-700">{comment}</p>
+                <p className="text-sm text-gray-700">{comment.text}</p>
               </div>
-              <p className="text-xs text-gray-500"> วัน xx xxxxxx xxxx : เวลา xx.xx</p>
+              <p className="text-xs text-gray-500">{comment.timestamp}</p>
             </div>
           </li>
         ))}
