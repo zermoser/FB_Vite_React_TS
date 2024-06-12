@@ -1,14 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { UserContext } from '../context/UserContext';
 
 const Navbar: React.FC = () => {
   const { state } = useContext(UserContext);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleLogout = () => {
+    navigate('/');
   };
 
   return (
@@ -33,7 +38,12 @@ const Navbar: React.FC = () => {
                   <Link to="" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Settings</Link>
                 </li>
                 <li>
-                  <Link to="/" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Logout</Link>
+                  <button
+                    onClick={handleLogout}
+                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200 w-full text-left"
+                  >
+                    Logout
+                  </button>
                 </li>
               </ul>
             </div>
