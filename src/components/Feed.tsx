@@ -6,7 +6,7 @@ const Feed: React.FC = () => {
     {
       src: 'https://imgix.ranker.com/list_img_v2/9099/309099/original/the-absolute-best-of-the-business-cat-meme',
       alt: 'Image',
-      user: 'คนเท่'
+      user: 'Cool Cat'
     },
     {
       src: 'https://img.freepik.com/free-vector/funny-serious-cat-animal-meme_23-2148974916.jpg?size=338&ext=jpg&ga=GA1.1.1141335507.1717977600&semt=ais_user',
