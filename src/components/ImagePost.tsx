@@ -7,10 +7,14 @@ interface ImagePostProps {
   alt: string;
   user: string;
   comments: { text: string; timestamp: string }[];
-  likes: number; // Add likes prop
+  likes: number;
   onAddComment: (text: string) => void;
-  onLikeChange: (likes: number) => void; // Add onLikeChange prop
+  onLikeChange: (likes: number) => void;
 }
+
+const formatNumber = (num: number) => {
+  return new Intl.NumberFormat('en-US').format(num);
+};
 
 const ImagePost: React.FC<ImagePostProps> = ({ src, alt, user, comments: defaultComments, likes: defaultLikes, onAddComment, onLikeChange }) => {
   const [likes, setLikes] = useState(defaultLikes);
@@ -28,7 +32,7 @@ const ImagePost: React.FC<ImagePostProps> = ({ src, alt, user, comments: default
     setLikes(newLikes);
     setIsLiked(!isLiked);
     setShowHeart(true);
-    onLikeChange(newLikes); // Notify parent component about the likes change
+    onLikeChange(newLikes);
     setTimeout(() => {
       setIsLikePending(false);
       setShowHeart(false);
@@ -83,7 +87,7 @@ const ImagePost: React.FC<ImagePostProps> = ({ src, alt, user, comments: default
           onClick={handleLike}
           disabled={isLikePending}
         >
-          <FaHeart color={isLiked ? 'red' : 'inherit'} /> Like {likes}
+          <FaHeart color={isLiked ? 'red' : 'inherit'} /> Like {formatNumber(likes)}
         </button>
       </div>
       <form onSubmit={handleCommentSubmit} className="mt-2 flex items-center">

@@ -30,7 +30,7 @@ const ImageFeed: React.FC = () => {
       alt: 'Image',
       user: 'Cat Meaw',
       comments: [],
-      likes: 10
+      likes: 10000000
     },
     {
       id: 3,

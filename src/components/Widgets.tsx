@@ -27,7 +27,7 @@ const Widgets: React.FC = () => {
         <h3 className="text-lg font-bold mb-3 flex items-center">
           <FaBullhorn className="mr-2 text-blue-500" /> Sponsored
         </h3>
-        <p className="text-gray-700">Ad Content</p>
+        <p className="text-gray-700">Ad Content ©Kittipoj Naewthavorn</p>
       </div>
     </div>
   );
