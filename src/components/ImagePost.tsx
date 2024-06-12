@@ -7,11 +7,13 @@ interface ImagePostProps {
   alt: string;
   user: string;
   comments: { text: string; timestamp: string }[];
+  likes: number; // Add likes prop
   onAddComment: (text: string) => void;
+  onLikeChange: (likes: number) => void; // Add onLikeChange prop
 }
 
-const ImagePost: React.FC<ImagePostProps> = ({ src, alt, user, comments: defaultComments, onAddComment }) => {
-  const [likes, setLikes] = useState(0);
+const ImagePost: React.FC<ImagePostProps> = ({ src, alt, user, comments: defaultComments, likes: defaultLikes, onAddComment, onLikeChange }) => {
+  const [likes, setLikes] = useState(defaultLikes);
   const [isLiked, setIsLiked] = useState(false);
   const [comment, setComment] = useState('');
   const [isLikePending, setIsLikePending] = useState(false);
@@ -22,9 +24,11 @@ const ImagePost: React.FC<ImagePostProps> = ({ src, alt, user, comments: default
   const handleLike = () => {
     if (isLikePending) return;
     setIsLikePending(true);
-    setLikes(likes + (isLiked ? -1 : 1));
+    const newLikes = likes + (isLiked ? -1 : 1);
+    setLikes(newLikes);
     setIsLiked(!isLiked);
     setShowHeart(true);
+    onLikeChange(newLikes); // Notify parent component about the likes change
     setTimeout(() => {
       setIsLikePending(false);
       setShowHeart(false);

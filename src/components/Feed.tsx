@@ -7,6 +7,7 @@ interface Post {
   alt: string;
   user: string;
   comments: { text: string; timestamp: string }[];
+  likes: number;
 }
 
 const ImageFeed: React.FC = () => {
@@ -21,6 +22,7 @@ const ImageFeed: React.FC = () => {
         { text: "OMG !", timestamp: "Wednesday, 12 June 2024, 11:24:53" },
         { text: "So Cool Cat :)", timestamp: "Wednesday, 12 June 2024, 11:24:53" }
       ],
+      likes: 999
     },
     {
       id: 2,
@@ -28,6 +30,7 @@ const ImageFeed: React.FC = () => {
       alt: 'Image',
       user: 'Cat Meaw',
       comments: [],
+      likes: 10
     },
     {
       id: 3,
@@ -35,6 +38,7 @@ const ImageFeed: React.FC = () => {
       alt: 'Image',
       user: 'Meaw',
       comments: [{ text: "Cute ♥", timestamp: "Tuesday, 11 June 2024, 10:34:23" }],
+      likes: 3
     },
     {
       id: 4,
@@ -42,6 +46,7 @@ const ImageFeed: React.FC = () => {
       alt: 'Image',
       user: 'Adorable Cat',
       comments: [{ text: "Adorable >_<", timestamp: "Tuesday, 11 June 2024, 10:34:23" }],
+      likes: 48
     },
     {
       id: 5,
@@ -49,6 +54,7 @@ const ImageFeed: React.FC = () => {
       alt: 'Image',
       user: 'Lovely Cat',
       comments: [{ text: "Lovely :D", timestamp: "Tuesday, 11 June 2024, 10:34:23" }],
+      likes: 6
     },
     {
       id: 6,
@@ -56,6 +62,7 @@ const ImageFeed: React.FC = () => {
       alt: 'Image',
       user: 'Jane Smith',
       comments: [{ text: "Great photo!", timestamp: "Tuesday, 11 June 2024, 10:34:23" }],
+      likes: 14
     },
   ]);
 
@@ -79,6 +86,14 @@ const ImageFeed: React.FC = () => {
     );
   };
 
+  const updateLikes = (postId: number, likes: number) => {
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post.id === postId ? { ...post, likes } : post
+      )
+    );
+  };
+
   return (
     <div className="p-4 w-full flex-1 overflow-y-auto">
       {posts.map((post) => (
@@ -88,7 +103,9 @@ const ImageFeed: React.FC = () => {
           alt={post.alt}
           user={post.user}
           comments={post.comments}
+          likes={post.likes}
           onAddComment={(text: string) => addComment(post.id, text)}
+          onLikeChange={(likes: number) => updateLikes(post.id, likes)}
         />
       ))}
     </div>
