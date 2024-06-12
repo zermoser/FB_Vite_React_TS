@@ -73,7 +73,7 @@ const Sidebar: React.FC = () => {
             </a>
           </li>
           <li>
-            <a href="/login" className="flex flex-col items-center text-white font-semibold hover:text-blue-100">
+            <a href="/" className="flex flex-col items-center text-white font-semibold hover:text-blue-100">
               <FaSignOutAlt className="text-xl" />
             </a>
           </li>
