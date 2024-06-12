@@ -27,6 +27,11 @@ const Feed: React.FC = () => {
       src: 'https://imgflip.com/s/meme/Cute-Cat.jpg',
       alt: 'Image',
       user: 'Mew Mew'
+    },
+    {
+      src: 'https://i.pinimg.com/736x/b9/c4/7e/b9c47ef70bff06613d397abfce02c6e7.jpg',
+      alt: 'Image',
+      user: 'Cat Maew'
     }
   ];
 

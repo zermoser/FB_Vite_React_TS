@@ -33,7 +33,7 @@ const Navbar: React.FC = () => {
                   <Link to="" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Settings</Link>
                 </li>
                 <li>
-                  <Link to="" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Logout</Link>
+                  <Link to="/login" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Logout</Link>
                 </li>
               </ul>
             </div>

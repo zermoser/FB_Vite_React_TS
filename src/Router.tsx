@@ -5,7 +5,7 @@ import Home from './pages/Home';
 
 const handleLogin = async (username: string, password: string) => {
   console.log('Logged in with:', { username, password });
-  window.location.href = '/login'
+  window.location.href = '/FB_Vite_React_TS/'
 };  
 
 export const router = createBrowserRouter([
@@ -26,7 +26,7 @@ export const router = createBrowserRouter([
     path: "*",
     element: <div>Don't have this page</div>,
     loader: ()=> {
-      window.location.href = '/404'
+      window.location.href = '/FB_Vite_React_TS/404'
       return true
     }
   },
@@ -34,6 +34,4 @@ export const router = createBrowserRouter([
     path: "404",
     element: <div>Error Not Found</div>
   },
-]);
-
-
+], {basename:"/FB_Vite_React_TS/"});
