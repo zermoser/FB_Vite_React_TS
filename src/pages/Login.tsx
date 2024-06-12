@@ -1,21 +1,39 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from 'axios'; // Import Axios
 import Swal from 'sweetalert2';
+import Modal from 'react-modal';
 import { UserContext } from '../context/UserContext';
 
 interface LoginProps {
   onLogin: (username: string, password: string) => Promise<void>;
 }
 
-const Login: React.FC<LoginProps> = ( ) => {
+// Modal styles
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
+
+const Login: React.FC<LoginProps> = () => {
   const [username, setUsername] = useState('emilys');
   const [password, setPassword] = useState('emilyspass');
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(true); // Modal state initialized to true
   const { dispatch } = useContext(UserContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setModalIsOpen(true);
+  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +43,7 @@ const Login: React.FC<LoginProps> = ( ) => {
         username,
         password,
       });
-      console.log('response', response)
+      console.log('response', response);
       dispatch({ type: 'SET_USER', payload: username });
       navigate('/home');
     } catch (err) {
@@ -41,6 +59,10 @@ const Login: React.FC<LoginProps> = ( ) => {
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
   };
 
   return (
@@ -92,6 +114,16 @@ const Login: React.FC<LoginProps> = ( ) => {
           </form>
         </div>
       </div>
+
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Credentials"
+      >
+        <h2>This is Example Username and Password to Login</h2>
+        <button onClick={closeModal} className="mt-4 bg-blue-500 text-white py-2 px-4 rounded">Close</button>
+      </Modal>
     </div>
   );
 };
