@@ -1,9 +1,9 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createHashRouter } from 'react-router-dom';
 import App from './App';
 import Home from './pages/Home';
 import Redirect404 from './pages/Redirect404';
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   {
     path: "/",
     element: <App />,
@@ -20,4 +20,4 @@ export const router = createBrowserRouter([
     path: "404",
     element: <div>Error Not Found</div>,
   },
-], { basename: "/FB_Vite_React_TS/" });
+], { basename: "/" });
