@@ -79,8 +79,8 @@ const Login: React.FC<LoginProps> = () => {
       <div className="max-w-screen-lg mx-auto flex flex-col lg:flex-row">
         <div className="hidden lg:block w-1/2 lg:w-1/3">
           <img
-            src="https://static.thairath.co.th/media/dFQROr7oWzulq5Fa5nRRVgnzYSSwUoPM7rigVHaj4QhdURLfyt90hBPNzf89n8vZ5bp.jpg"
-            className="object-cover w-full h-full"
+            src="https://zermoser.github.io/assets/images/MosProfile.jpg"
+            className="object-cover h-[273px]"
             alt="Login Image"
           />
         </div>
